@@ -1,0 +1,63 @@
+<?php
+include('config.php');
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
+	$id=$_POST["id"];
+	$event_name=$_POST["eventName"];
+	$price=$_POST["eventPrice"];
+	$address=$_POST["eventAddress"];
+	$description=$_POST["eventDescription"];
+	$vendorId=$_POST["vendorId"];
+	$date=$_POST["date"];
+	$currentDateTime = date('d-m-Y');
+	$latitude=$_POST["latitude"];
+	$longitude=$_POST["longitude"];
+	$time =$_POST["time"];
+    $tmp_name = $_FILES['img']['tmp_name']; 
+    $pic_name = $_FILES['img']['name'];
+    $uploads_dir="vendorImage/";
+    $pic_name= time()."_".$pic_name;
+    move_uploaded_file($tmp_name, $uploads_dir.$pic_name);
+    $file_name=$uploads_dir.$pic_name; 
+    if($id=='')
+    {       
+          $query="INSERT INTO events (id,name,price,address,description,vendorId,date,time,images,latitude,longitude) VALUES
+          (Null,'$event_name', '$price', '$address','$description', '$vendorId', '$date','$time','$file_name','$latitude','$longitude')";
+          $res_get=mysqli_query($sql,$query);
+          $get=" SELECT * FROM events WHERE vendorId='$vendorId' and date >= '$currentDateTime' ORDER BY date ASC";
+        //   $get="select * from events where vendorId='$vendorId'";
+          $get_res=mysqli_query($sql,$get);
+          while($data=mysqli_fetch_assoc($get_res))
+          {
+              $json[]=$data;
+          }
+          echo json_encode(array('status'=>'1','message'=>'Event posted successfully','data'=>$json));        
+     }
+    else
+    {   
+          if($tmp_name!='')
+          {
+              $qry="update events set name='$event_name',price='$price',address='$address',
+              description='$description',date='$date',time='$time',images='$file_name',latitude='$latitude',longitude='$longitude' where id='$id' AND vendorId='$vendorId'";
+              $res=mysqli_query($sql,$qry);
+          }
+          else
+          {
+              $qry="update events set name='$event_name',price='$price',address='$address',
+              description='$description',date='$date',time='$time',latitude='$latitude',longitude='$longitude' where id='$id' AND vendorId='$vendorId'";
+              $res=mysqli_query($sql,$qry);
+          }
+          
+        //   $get="select * from events where vendorId='$vendorId'";
+          $get=" SELECT * FROM events WHERE vendorId='$vendorId' and date >= '$currentDateTime' ORDER BY date ASC";
+          $res=mysqli_query($sql,$get);
+          while($data=mysqli_fetch_assoc($res))
+          {
+              $json[]=$data;
+          }
+          echo json_encode(array('status'=>'1','message'=>'Event updated successfully','data'=>$json)); 
+    }
+  
+}
+	 
+?>
