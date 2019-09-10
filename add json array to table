@@ -1,0 +1,39 @@
+<?php
+    
+    include(config.php);
+    
+    $json = '{
+        "appointments":[
+            {
+                "userId":"1",
+                "day":"Sunday",
+                "date":"12/09/2019",
+                "category":"Gym",
+                "startTime":"10:00am",
+                "endTime":"11:30am"
+            },
+            {
+                "userId":"2",
+                "day":"Monday",
+                "date":"13/09/2019",
+                "category":"Zumba",
+                "startTime":"09:00am",
+                "endTime":"11:00am"
+            }
+        ]
+    }';
+    
+    $appointments = json_decode($json);
+
+    foreach ($appointments as $appointment) {
+        foreach($appointment as $ap){
+            echo $ap->userId, "\n";
+            echo $ap->day, "\n";
+            echo $ap->date, "\n";
+            echo $ap->category, "\n";
+            echo $ap->startTime, "\n";
+            echo $ap->endTime, "\n\n";
+        }
+    }
+    
+?>
