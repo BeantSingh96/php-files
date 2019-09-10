@@ -1,0 +1,24 @@
+<?php
+include('config.php');
+$vendor_id=$_POST['vendor_id'];
+    $tmp_name = $_FILES['img']['tmp_name'];
+    $pic_name = $_FILES['img']['name'];
+        $uploads_dir="vendorImage/";
+        $pic_name= time()."_".$pic_name;
+        move_uploaded_file($tmp_name, $uploads_dir.$pic_name);
+        $file_name=$uploads_dir.$pic_name;
+      //      $sql_img=",profile_pic='$file_name'"; 
+      
+      
+      $query="INSERT INTO `vendor_gallery` (`srno`, `vendor_id`, `vendor_picture`, `gallery_position`) VALUES (NULL, '$vendor_id', '$file_name', 'nothing')";
+      $res_get=mysqli_query($sql,$query);
+      $get="select * from vendor_gallery where vendor_id='$vendor_id'";
+      $get_res=mysqli_query($sql,$get);
+      while($data=mysqli_fetch_assoc($get_res))
+      {
+         $json[]=$data;
+      }
+
+      echo json_encode(array('data'=>$json,'status'=>'1'));         
+ 
+?>
