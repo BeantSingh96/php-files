@@ -1,0 +1,32 @@
+<?php
+include('config.php');
+$email=$_POST['email'];
+$type=$_POST['login_type'];
+$social=$_POST['social'];
+$query1 = "SELECT * FROM users";
+$q = mysqli_query($sql,$query1);
+while($rows = mysqli_fetch_assoc($q)){
+    if($rows['social_id'] == $social){
+        $row="select * from users where social_id='$social'";
+        $query=mysqli_query($sql,$row);
+        $data=mysqli_fetch_assoc($query);
+        echo json_encode(array('message'=>'login successful','status'=>'2','details'=>$data)); 
+        die;
+    }
+}
+
+if($email == '' &&  $social == '' && $type=='')
+{
+    echo json_encode(array('message'=>'failure','status'=>'0')); 
+}
+else
+{
+    $qry="INSERT INTO `users` (email,social_id,social_login_type) VALUES ('$email','$social','$type')";
+    $set=mysqli_query($sql,$qry);
+    
+    $get="select * from users where social_id='$social'";
+    $queryGet=mysqli_query($sql,$get);
+    $dataGet=mysqli_fetch_assoc($queryGet);
+    echo json_encode(array('message'=>'account created and login successful','status'=>'1','details'=>$dataGet)); 
+}
+?>
