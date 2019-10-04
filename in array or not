@@ -1,0 +1,213 @@
+<?php 
+include('config.php');
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
+      $Id           = $_POST["id"];
+      $name         = mysqli_real_escape_string($sql, $_POST['name']);
+      $address      = mysqli_real_escape_string($sql, $_POST['address']);
+      $longitude    = mysqli_real_escape_string($sql, $_POST['longitude']);
+      $latitude     = mysqli_real_escape_string($sql, $_POST['latitude']);
+      $description  = mysqli_real_escape_string($sql, $_POST['description']);
+      $price        = mysqli_real_escape_string($sql, $_POST['price']);
+      $opentime     = mysqli_real_escape_string($sql, $_POST['opentime']);
+      $closetime    = mysqli_real_escape_string($sql, $_POST['closetime']);
+      $working_days = mysqli_real_escape_string($sql, $_POST['working_days']);
+      $close_days   = mysqli_real_escape_string($sql, $_POST['close_days']);
+      $classes      = mysqli_real_escape_string($sql, $_POST['classes']);
+      $landmark     = mysqli_real_escape_string($sql, $_POST['landmark']);
+      $slots        = $_POST['service_category'];
+      $explode = explode(",",$slots);
+      
+     
+      $select_query = "SELECT * FROM `vendor_category` WHERE vendor_id='$Id'";
+      $result_querry = mysqli_query($sql,$select_query);
+
+      if(mysqli_num_rows($result_querry) > 0){
+          
+            if (in_array("Heat", $explode)) {
+                $heat = "1";
+            }else{
+                $heat = "0";
+            }     
+            
+            if (in_array("Gym", $explode)) {
+                $gym = "1";
+            }else{
+                $gym = "0";
+            }
+            
+            if (in_array("Zumba", $explode)) {
+                $zumba = "1";
+            }else{
+                $zumba = "0";
+            }   
+            
+            if (in_array("Yoga", $explode)) {
+                $yoga = "1";
+            }else{
+                $yoga = "0";
+            }   
+            
+            if (in_array("Studio", $explode)) {
+                $studio = "1";
+            }else{
+                $studio = "0";
+            }   
+            
+            if (in_array("Cross Functional", $explode)) {
+                $cross = "1";
+            }else{
+                $cross = "0";
+            } 
+            
+            if (in_array("Sports", $explode)) {
+                $sports = "1";
+            }else{
+                $sports = "0";
+            } 
+            
+            if (in_array("Women Exclusive", $explode)) {
+                $women = "1";
+            }else{
+                $women = "0";
+            } 
+            
+            if (in_array("Pregnancy", $explode)) {
+                $pregnancy = "1";
+            }else{
+                $pregnancy = "0";
+            } 
+            
+            if (in_array("Swimming", $explode)) {
+                $swimming = "1";
+            }else{
+                $swimming = "0";
+            } 
+            
+            if (in_array("Adventure", $explode)) {
+                $adventure = "1";
+            }else{
+                $adventure = "0";
+            } 
+            
+            if (in_array("Martial Arts", $explode)) {
+                $martial_arts = "1";
+            }else{
+                $martial_arts = "0";
+            } 
+            
+            if (in_array("Kids", $explode)) {
+                $kids = "1";
+            }else{
+                $kids = "0";
+            } 
+       
+          $update_query="UPDATE `vendor_category` SET `Heat`='$heat',`Gym`='$gym',`Zumba`='$zumba',`Yoga`='$yoga',`Studio`='$studio',`Cross_Functional`='$cross',`Sports`='$sports',`Women_Exclusive`='$women',`Pregnancy`='$pregnancy',`Swimming`='$swimming',`adventure`='$adventure',`martial_arts`='$martial_arts',`kids`='$kids' WHERE `vendor_id`='$Id'";
+          $update_result = mysqli_query($sql,$update_query);
+          
+      }else{
+          foreach($explode as $names){
+
+                if (in_array("Heat", $explode)) {
+                    $heat = "1";
+                }else{
+                    $heat = "0";
+                }     
+                
+                if (in_array("Gym", $explode)) {
+                    $gym = "1";
+                }else{
+                    $gym = "0";
+                }
+                
+                if (in_array("Zumba", $explode)) {
+                    $zumba = "1";
+                }else{
+                    $zumba = "0";
+                }   
+                
+                if (in_array("Yoga", $explode)) {
+                    $yoga = "1";
+                }else{
+                    $yoga = "0";
+                }   
+                
+                if (in_array("Studio", $explode)) {
+                    $studio = "1";
+                }else{
+                    $studio = "0";
+                }   
+                
+                if (in_array("Cross Functional", $explode)) {
+                    $cross = "1";
+                }else{
+                    $cross = "0";
+                } 
+                
+                if (in_array("Sports", $explode)) {
+                    $sports = "1";
+                }else{
+                    $sports = "0";
+                } 
+                
+                if (in_array("Women Exclusive", $explode)) {
+                    $women = "1";
+                }else{
+                    $women = "0";
+                } 
+                
+                if (in_array("Pregnancy", $explode)) {
+                    $pregnancy = "1";
+                }else{
+                    $pregnancy = "0";
+                } 
+                
+                if (in_array("Swimming", $explode)) {
+                    $swimming = "1";
+                }else{
+                    $swimming = "0";
+                } 
+                
+                if (in_array("Adventure", $explode)) {
+                    $adventure = "1";
+                }else{
+                    $adventure = "0";
+                } 
+                
+                if (in_array("Martial Arts", $explode)) {
+                    $martial_arts = "1";
+                }else{
+                    $martial_arts = "0";
+                } 
+                
+                if (in_array("Kids", $explode)) {
+                    $kids = "1";
+                }else{
+                    $kids = "0";
+                } 
+          }
+          $insert_query="INSERT INTO `vendor_category` (`id`,`vendor_id`,`Heat`,`Gym`,`Zumba`,`Yoga`,`Studio`,`Cross_Functional`,`Sports`,`Women_Exclusive`,`Pregnancy`,`Swimming`,`adventure`,`martial_arts`,`kids`) VALUES (Null,'$Id','$heat','$gym','$zumba','$yoga','$studio','$cross','$sports','$women','$pregnancy','$swimming','$adventure','$martial_arts','$kids')";
+          $result = mysqli_query($sql,$insert_query);
+      }
+      
+
+      $qry1="update vendors set name='$name',address ='$address',longitude ='$longitude',latitude ='$latitude',landmark ='$landmark',price ='$price',description ='$description',opentime ='$opentime',closetime='$closetime',working_days='$working_days',close_days='$close_days',classes='$classes',slots='$slots' where id='$Id'";
+      $res=mysqli_query($sql,$qry1);
+
+  
+      $query="select * from vendors where  id='$Id'";
+      $res_get=mysqli_query($sql,$query);
+
+ 
+      while($data=mysqli_fetch_assoc($res_get))
+      {
+        $json[]=$data;
+      }
+        
+        echo json_encode(array('data'=>$json,'msg'=>'update successfuly','Status'=>'1'));
+     //echo json_encode(array($json));
+}
+
+
+
+?>
